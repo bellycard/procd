@@ -1,0 +1,12 @@
+# Example Procd TOML Configuration
+
+ticker_interval = 5 # Time (seconds) to poll resources and collect metrics
+
+[output.http]
+bind_address = "0.0.0.0:5596"
+
+[output.heka]
+server = "127.0.0.1:5565"
+encoder = "protobuf"
+sender = "tcp"
+payload = false
