@@ -27,10 +27,6 @@ import (
 	"time"
 )
 
-const (
-	Version = "0.0.1-alpha"
-)
-
 type procdConfig struct {
 	TickerInterval int               `toml:"ticker_interval"`
 	Outputs        map[string]output `toml:"output"`
@@ -108,11 +104,16 @@ func main() {
 					marshalledResources, _ := json.MarshalIndent(collection, "", " ")
 					fmt.Println(string(marshalledResources))
 				case "heka":
-					hc := NewHekaClient(output.Server, output.Encoder, output.Sender)
-					hc.SendCPUResources(collection, output.Payload)
-					hc.SendMemoryResources(collection, output.Payload)
-					hc.SendDiskResources(collection, output.Payload)
-					hc.sender.Close()
+					hc, err := NewHekaClient(output.Server, output.Encoder, output.Sender)
+					if err == nil {
+						err := hc.SendCPUResources(collection, output.Payload)
+						verifyErrorResponse(err, "generate CPU resources Heka message")
+						err = hc.SendMemoryResources(collection, output.Payload)
+						verifyErrorResponse(err, "generate memory resources Heka message")
+						err = hc.SendDiskResources(collection, output.Payload)
+						verifyErrorResponse(err, "generate disk resources Heka message")
+						hc.sender.Close()
+					}
 				}
 			}
 		}

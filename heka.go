@@ -25,20 +25,22 @@ import (
 
 type HekaClient struct {
 	client   client.Client
-	encoder  client.Encoder // I.e. json
+	encoder  client.Encoder // I.e. protobufs
 	sender   client.Sender  // I.e. tcp
 	pid      int32
 	hostname string
 }
 
 // NewHekaClient returns a new HekaClient with process ID, hostname, encoder and sender.
-func NewHekaClient(h, e, s string) *HekaClient {
+func NewHekaClient(h, e, s string) (self *HekaClient, err error) {
 	pid := int32(os.Getpid())
 	hostname, _ := os.Hostname()
 	encoder := client.NewProtobufEncoder(nil)
 	sender, err := client.NewNetworkSender(s, h)
-	verifyErrorResponse(err, "output[heka] could not create sender")
-	return &HekaClient{encoder: encoder, sender: sender, pid: pid, hostname: hostname}
+	if err == nil {
+		self = &HekaClient{encoder: encoder, sender: sender, pid: pid, hostname: hostname}
+	}
+	return
 }
 
 func (self HekaClient) SendCPUResources(pl *resources.Collection, ipl bool) (err error) {
