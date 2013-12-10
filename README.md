@@ -1,6 +1,6 @@
 # Procd
 
-System resource and profile information emitter. Possible outputs are to stdout, JSON over HTTP, and as a client to Hekad.
+System resource and profile information emission. A simple method of exposing system resources statistics through standard interfaces. Current interfaces are stdout, JSON over HTTP, and as a client to [Mozilla Hekad](https://github.com/mozilla-services/heka).
 
 
 # Installation
@@ -37,8 +37,9 @@ bind_address = "0.0.0.0:5596"
 
 [output.heka]
 server = "127.0.0.1:5565"
-encoder = "json"
+encoder = "protobuf"
 sender = "tcp"
+payload = false
 ```
 
 
