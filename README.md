@@ -40,6 +40,7 @@ server = "127.0.0.1:5565"
 encoder = "protobuf"
 sender = "tcp"
 payload = false
+hostname = "super.coolhost.com" # Optional. Overwrites os.Hostname() for Heka messages.
 ```
 
 

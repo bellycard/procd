@@ -33,16 +33,17 @@ type HekaClient struct {
 
 // NewHekaClient returns a new HekaClient with process ID, hostname, encoder and sender.
 func NewHekaClient(h, e, s, hn string) (self *HekaClient, err error) {
-	pid := int32(os.Getpid())
+	self = &HekaClient{}
+	self.pid = int32(os.Getpid())
 	if hn == "" {
-		hostname, _ := os.Hostname()
+		self.hostname, _ = os.Hostname()
 	} else {
-		hostname := hn
+		self.hostname = hn
 	}
-	encoder := client.NewProtobufEncoder(nil)
-	sender, err := client.NewNetworkSender(s, h)
+	self.encoder = client.NewProtobufEncoder(nil)
+	self.sender, err = client.NewNetworkSender(s, h)
 	if err == nil {
-		self = &HekaClient{encoder: encoder, sender: sender, pid: pid, hostname: hostname}
+		return self, nil
 	}
 	return
 }
