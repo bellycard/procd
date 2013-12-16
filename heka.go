@@ -32,9 +32,13 @@ type HekaClient struct {
 }
 
 // NewHekaClient returns a new HekaClient with process ID, hostname, encoder and sender.
-func NewHekaClient(h, e, s string) (self *HekaClient, err error) {
+func NewHekaClient(h, e, s, hn string) (self *HekaClient, err error) {
 	pid := int32(os.Getpid())
-	hostname, _ := os.Hostname()
+	if hn == "" {
+		hostname, _ := os.Hostname()
+	} else {
+		hostname := hn
+	}
 	encoder := client.NewProtobufEncoder(nil)
 	sender, err := client.NewNetworkSender(s, h)
 	if err == nil {

@@ -38,6 +38,7 @@ type output struct {
 	Encoder     string
 	Sender      string
 	Payload     bool
+	Hostname    string
 }
 
 func waitForSignals(exitStatus <-chan bool) {
@@ -104,7 +105,7 @@ func main() {
 					marshalledResources, _ := json.MarshalIndent(collection, "", " ")
 					fmt.Println(string(marshalledResources))
 				case "heka":
-					hc, err := NewHekaClient(output.Server, output.Encoder, output.Sender)
+					hc, err := NewHekaClient(output.Server, output.Encoder, output.Sender, output.Hostname)
 					if err == nil {
 						err := hc.SendCPUResources(collection, output.Payload)
 						verifyErrorResponse(err, "generate CPU resources Heka message")
