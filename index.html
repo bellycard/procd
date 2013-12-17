@@ -28,8 +28,96 @@
         </ul>
       </header>
       <section>
-        <h3>
-<a name="welcome-to-belly-procd" class="anchor" href="#welcome-to-belly-procd"><span class="octicon octicon-link"></span></a>Welcome to Belly Procd</h3>
+        <h1>
+<a name="procd" class="anchor" href="#procd"><span class="octicon octicon-link"></span></a>Procd</h1>
+
+<p>System resource and profile information emission. A simple method of exposing system resources statistics through standard interfaces. Current interfaces are stdout, JSON over HTTP, and as a client to <a href="https://github.com/mozilla-services/heka">Mozilla Hekad</a>.</p>
+
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>This will eventually be rolled up into a make file.</p>
+
+<ul>
+<li>Install Go v1.1+</li>
+<li>Install Git</li>
+<li>Install Mercurial (Needed to download the UUID package from Google)</li>
+<li>git clone <a href="https://github.com/bellycard/procd.git">https://github.com/bellycard/procd.git</a>
+</li>
+<li>go get github.com/bellycard/toml</li>
+<li>go get code.google.com/p/go-uuid/uuid</li>
+<li>go get github.com/mozilla-services/heka/client</li>
+<li>go get github.com/mozilla-services/heka/message</li>
+<li>go build</li>
+<li>./procd -config=procd.toml</li>
+</ul><h1>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h1>
+
+<p>Configuartion of Procd is based on a specified <a href="https://github.com/mojombo/toml">TOML</a> configuration file. Defined outputs will have metrics and profile information emitted if specified.</p>
+
+<h3>
+<a name="example-configuration" class="anchor" href="#example-configuration"><span class="octicon octicon-link"></span></a>Example Configuration</h3>
+
+<p>This configuration will emit metric information in JSON format to STDOUT, localhost:5596, and to a local Hekad agent.</p>
+
+<pre><code>ticker_interval = 5 # Time (seconds) to poll resources and collect metrics
+
+[output.stdout]
+
+[output.http]
+bind_address = "0.0.0.0:5596"
+
+[output.heka]
+server = "127.0.0.1:5565"
+encoder = "protobuf"
+sender = "tcp"
+payload = false
+hostname = "super.coolhost.com" # Optional. Overwrites os.Hostname() for Heka messages.
+</code></pre>
+
+<h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<h3>
+<a name="http" class="anchor" href="#http"><span class="octicon octicon-link"></span></a>HTTP</h3>
+
+<p>To view all resources: <code>GET http://hostname:5596/v1/resources.json</code>
+To view CPU resources: <code>GET http://hostname:5596/v1/resources/cpu.json</code>
+To view memory resources: <code>GET http://hostname:5596/v1/resources/memory.json</code>
+To view disk resources: <code>GET http://hostname:5596/v1/resources/disk.json</code>
+To ensure the application is operational: <code>GET http://hostname:5596/ping</code></p>
+
+<h3>
+<a name="benchmark-information" class="anchor" href="#benchmark-information"><span class="octicon octicon-link"></span></a>Benchmark Information</h3>
+
+<p>To view benchmark information: <code>go test -bench=".*"</code></p>
+
+<h1>
+<a name="roadmap" class="anchor" href="#roadmap"><span class="octicon octicon-link"></span></a>Roadmap</h1>
+
+<ul>
+<li>Statsd output</li>
+<li>Currently only Linux /proc stats are collected. Profile information will be next.</li>
+<li>Only the Linux platform is supported. Other platforms, Darwin notibly, will be included.</li>
+</ul><h1>
+<a name="versioning" class="anchor" href="#versioning"><span class="octicon octicon-link"></span></a>Versioning</h1>
+
+<p>Versioning adheres to <a href="http://semver.org/spec/v2.0.0.html">Semantic Versioning 2.0.0</a>.</p>
+
+<h1>
+<a name="authors--credit" class="anchor" href="#authors--credit"><span class="octicon octicon-link"></span></a>Author(s) &amp; Credit</h1>
+
+<p><strong>Christian Vozar</strong></p>
+
+<ul>
+<li><a href="http://twitter.com/christianvozar">http://twitter.com/christianvozar</a></li>
+<li><a href="http://github.com/christianvozar">http://github.com/christianvozar</a></li>
+</ul><p>Credit given to Mozilla's <a href="https://github.com/jrconlin/pushgo/blob/master/src/mozilla.org/util/heka_log.go">PushGo</a> for Heka client code for which the Heka code is heavily based.</p>
+
+<h2>
+<a name="copyright-and-license" class="anchor" href="#copyright-and-license"><span class="octicon octicon-link"></span></a>Copyright and License</h2>
+
+<p>Copyright 2013 Belly, Inc. under <a href="LICENSE.md">the Apache 2.0 license</a>.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/bellycard">bellycard</a></p>
