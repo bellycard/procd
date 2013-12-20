@@ -87,7 +87,7 @@ func main() {
 			go HTTPServerStart(output.BindAddress)
 			fmt.Printf("Procd: Output[http]: %s\n", output.BindAddress)
 		case "heka":
-			fmt.Printf("Procd: Output[heka]: %s [%s / %s]\n", output.Server, output.Encoder, output.Sender)
+			fmt.Printf("Procd: Output[heka]: %s [TCP / Protobufs]\n", output.Server)
 		}
 	}
 
@@ -105,7 +105,7 @@ func main() {
 					marshalledResources, _ := json.MarshalIndent(collection, "", " ")
 					fmt.Println(string(marshalledResources))
 				case "heka":
-					hc, err := NewHekaClient(output.Server, output.Encoder, output.Sender, output.Hostname)
+					hc, err := NewHekaClient(output.Server, output.Hostname)
 					if err == nil {
 						err := hc.SendCPUResources(collection, output.Payload)
 						verifyErrorResponse(err, "generate CPU resources Heka message")
