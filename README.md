@@ -5,7 +5,9 @@ System resource and profile information emission. A simple method of exposing sy
 
 # Installation
 
-This will eventually be rolled up into a make file.
+You can utilize the scripts/build.sh to generate a binary assuming Go is installed.
+
+Manual build & installation steps:
 
 - Install Go v1.1+
 - Install Git
