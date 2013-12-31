@@ -2,7 +2,7 @@
 
 System resource and profile information emission. A simple method of exposing system resources statistics through standard interfaces. Current interfaces are stdout, JSON over HTTP, and as a client to [Mozilla Hekad](https://github.com/mozilla-services/heka).
 
-While the Heka client will accept transport of TCP or UDP, it is recommended to use UDP for system metric data.
+While the Heka client will accept transport of TCP or UDP, though UDP is recommended for system metric data.
 
 # Installation
 
@@ -10,7 +10,7 @@ You can utilize the scripts/build.sh to generate a binary assuming Go is install
 
 Manual build & installation steps:
 
-- Install Go v1.1+
+- Install Go v1.2+
 - Install Git
 - Install Mercurial (Needed to download the UUID package from Google)
 - git clone https://github.com/bellycard/procd.git
@@ -24,7 +24,7 @@ Manual build & installation steps:
 
 # Configuration
 
-Configuartion of Procd is based on a specified [TOML](https://github.com/mojombo/toml) configuration file. Defined outputs will have metrics and profile information emitted if specified.
+Configuration of Procd is based on a specified [TOML](https://github.com/mojombo/toml) configuration file. A reasonable default configuration is in /conf/procd.toml. Defined outputs will have metrics and profile information emitted if specified.
 
 ### Example Configuration
 
