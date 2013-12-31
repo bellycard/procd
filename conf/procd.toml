@@ -6,7 +6,6 @@ ticker_interval = 5 # Time (seconds) to poll resources and collect metrics
 bind_address = "0.0.0.0:5596"
 
 [output.heka]
-server = "127.0.0.1:5565"
-encoder = "protobuf"
-sender = "tcp"
+server = "127.0.0.1:4880"
+sender = "udp"
 payload = false
