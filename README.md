@@ -2,6 +2,7 @@
 
 System resource and profile information emission. A simple method of exposing system resources statistics through standard interfaces. Current interfaces are stdout, JSON over HTTP, and as a client to [Mozilla Hekad](https://github.com/mozilla-services/heka).
 
+While the Heka client will accept transport of TCP or UDP, it is recommended to use UDP for system metric data.
 
 # Installation
 
@@ -39,8 +40,7 @@ bind_address = "0.0.0.0:5596"
 
 [output.heka]
 server = "127.0.0.1:5565"
-encoder = "protobuf"
-sender = "tcp"
+sender = "udp"
 payload = false
 hostname = "super.coolhost.com" # Optional. Overwrites os.Hostname() for Heka messages.
 ```
