@@ -11,6 +11,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
+// Contributor(s):
+//   Christian Vozar (christian@bellycard.com)
 
 package resources
 
@@ -26,7 +29,7 @@ func timeToString(t time.Time) string {
 
 func verifyErrorResponse(err error, context string) {
 	if err != nil {
-		fmt.Printf("Resources: [error] %s: %s\n", context, err)
+		fmt.Printf("Procd Resources: [error] %s: %s\n", context, err)
 	}
 }
 
