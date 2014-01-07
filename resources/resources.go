@@ -22,13 +22,14 @@ import (
 type Collection struct {
 	Timestamp                      time.Time
 	Hostname                       string
-	CPU                            CPUMetrics    `json:",omitempty"`
-	Memory                         MemoryMetrics `json:",omitempty"`
-	Disk                           []DiskMetrics `json:",omitempty"`
-	Procs                          int64         `json:",omitempty"`
-	ProcsRunning                   int64         `json:",omitempty"`
-	ProcsBlocked                   int64         `json:",omitempty"`
-	SystemContextSwitchesPerSecond int64         `json:",omitempty"`
+	CPU                            CPUMetrics     `json:",omitempty"`
+	Memory                         MemoryMetrics  `json:",omitempty"`
+	Disk                           []DiskMetrics  `json:",omitempty"`
+	Entropy                        EntropyMetrics `json:",omitempty"`
+	Procs                          int64          `json:",omitempty"`
+	ProcsRunning                   int64          `json:",omitempty"`
+	ProcsBlocked                   int64          `json:",omitempty"`
+	SystemContextSwitchesPerSecond int64          `json:",omitempty"`
 }
 
 // NewCollection returns a new Collection of metrics with a timestamp and hostnames.
@@ -48,5 +49,6 @@ func (self *Collection) CollectAllMetrics() *Collection {
 	self.CollectCPUMetrics()
 	self.CollectMemoryMetrics()
 	self.CollectDiskMetrics()
+	self.CollectEntropy()
 	return self
 }
