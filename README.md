@@ -2,7 +2,7 @@
 
 System resource and profile information emission. A simple method of exposing system resources statistics through standard interfaces. Current interfaces are stdout, JSON over HTTP, and as a client to [Mozilla Heka](https://github.com/mozilla-services/heka).
 
-While the Heka client will accept transport of TCP or UDP, though UDP is recommended for system metric data.
+While the Heka client will accept transport of TCP or UDP, though UDP is recommended and is the default.
 
 # Installation
 
