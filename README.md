@@ -21,7 +21,6 @@ Manual build & installation steps:
 - go build
 - ./procd -config=procd.toml
 
-
 # Configuration
 
 Configuration of Procd is based on a specified [TOML](https://github.com/mojombo/toml) configuration file. A reasonable default configuration is in /conf/procd.toml. Defined outputs will have metrics and profile information emitted if specified.
